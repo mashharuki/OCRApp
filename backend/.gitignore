@@ -1,0 +1,3 @@
+node_modules/
+# ログファイル
+server/log/server.log
