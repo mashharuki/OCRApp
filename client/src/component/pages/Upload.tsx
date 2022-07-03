@@ -78,27 +78,27 @@ function Upload():ReactElement {
 
         //送信用のデータを用意する。
         let postData = new FormData();
-        // 送信データを作成する。
-        /*
-        postData.append('fileName',fileName);
-        postData.append('file',file);
-        console.log("postData:", postData);
-        */
+        // リクエストパラメータを作成する。
         postData.append('file', file);
         postData.append('pinataOptions', '{"cidVersion": 1}');
         postData.append('pinataMetadata', `{"name": "${fileName}", "keyvalues": {"company": "Pinata"}}`);
         
-
         try {
             // POSTメソッドで送信
-            const res = await axios.post(baseAPIUrl + '/pinning/pinFileToIPFS', postData , {
-                headers: {
-                    'accept': 'application/json',
-                    'pinata_api_key': `${REACT_APP_API_Key}`,
-                    'pinata_secret_api_key': `${REACT_APP_API_Secret}`,
-                    'Content-Type': `multipart/form-data; boundary=${postData}`,
-                },  
-            });
+            const res = await axios.post(
+                // リクエスト先のURL
+                baseAPIUrl + '/pinning/pinFileToIPFS', 
+                // リクエストパラメータ
+                postData , 
+                // ヘッダー
+                {
+                    headers: {
+                        'accept': 'application/json',
+                        'pinata_api_key': `${REACT_APP_API_Key}`,
+                        'pinata_secret_api_key': `${REACT_APP_API_Secret}`,
+                        'Content-Type': `multipart/form-data; boundary=${postData}`,
+                    },  
+                });
             console.log(res);
             alert("ファイルアップロード成功！");
         } catch (e) {
